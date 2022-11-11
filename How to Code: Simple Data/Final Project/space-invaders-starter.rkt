@@ -2,7 +2,6 @@
 (require 2htdp/image)
 
 ;; Space Invaders
-
 ;; Constants:
 
 (define WIDTH  300)
