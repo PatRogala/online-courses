@@ -12,5 +12,19 @@ val abs_of_y = abs y;
 
 val p = ~1; (* negativ number *)
 
+val pp = x div (y + 1); (* division *)
 
-(* Rules for Expressions *)
+
+(* Functions Informally *)
+fun pow(x : int, y : int) =
+    if y = 0 then 1
+    else x * pow(x, y - 1);
+
+fun cube(x : int) =
+    pow(x, 3);
+
+val sixtyfour = cube(4);
+
+(* Pairs and Other Tuples *)
+val x1 = (7, (true, 9))
+val x2 = #1 (#2 x1) (* bool *)
