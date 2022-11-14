@@ -28,3 +28,24 @@ val sixtyfour = cube(4);
 (* Pairs and Other Tuples *)
 val x1 = (7, (true, 9))
 val x2 = #1 (#2 x1) (* bool *)
+
+(* Introducting Lists *)
+[] (* empty list *)
+[1, 2, 3] (* list of integers *)
+
+(* List Operations *)
+2::[1, 2, 3] (* cons *)
+null [] (* returns true if empty *)
+hd [1, 2, 3] (* returns first element *)
+tl [1, 2, 3] (* returns list without first element *)
+
+(* List Functions *)
+fun sum_list(xs : int list) =
+    if null xs then 0
+    else hd xs + sum_list(tl xs);
+
+fun countdown(x : int) =
+    if x = 0 then []
+    else x::countdown(x - 1);
+
+(* Let Expressions *)
