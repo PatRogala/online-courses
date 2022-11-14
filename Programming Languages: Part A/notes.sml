@@ -1,0 +1,16 @@
+(* ML Variable Bindings and Expressions *)
+val x = 34; (* x is bound to 34 *)
+            (* Static environment: x : int *)
+            (* Dynamic environment: x --> 34 *)
+
+val y = x + 1; (* y is bound to 35 *)
+               (* Dynamic environment: x --> 34, y --> 35 *)
+
+val abs_of_x = if x < 0 then 0 - x else x;
+
+val abs_of_y = abs y;
+
+val p = ~1; (* negativ number *)
+
+
+(* Rules for Expressions *)
