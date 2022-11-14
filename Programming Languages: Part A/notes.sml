@@ -49,3 +49,23 @@ fun countdown(x : int) =
     else x::countdown(x - 1);
 
 (* Let Expressions *)
+(* Let you add bindings to the dynamic environment *)
+fun silly(z : int) =
+    let
+        val x = z + 1;
+        val y = x + 1;
+    in
+        x * y
+    end;
+
+(* Nested Functions *)
+fun contup_from1(x : int) =
+    let
+        fun contup_from1_aux(y : int) =
+            if y = 0 then []
+            else (x, y)::contup_from1_aux(y - 1);
+    in
+        contup_from1_aux(x)
+    end;
+
+(* Options *)
