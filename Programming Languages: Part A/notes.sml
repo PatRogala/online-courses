@@ -68,4 +68,8 @@ fun contup_from1(x : int) =
         contup_from1_aux(x)
     end;
 
-(* Options *)
+(* Booleans and Comparision Operations *)
+x andalso y (* and *)
+x orelse y (* or *)
+not x (* not *)
+(* =, <>, >, <, >=, <= *)
