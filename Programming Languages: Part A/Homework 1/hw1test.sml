@@ -24,18 +24,26 @@ val test5 = dates_in_months([(2012,2,28),(2013,12,1),(2011,3,31),(2011,4,28)],[2
 val test5_2 = dates_in_months([(2012,2,28),(2013,12,1),(2011,3,31),(2011,4,28)],[9,8,10]) = []
 val test5_3 = dates_in_months([(2012,2,28),(2013,12,1),(2011,3,31),(2011,4,28)],[2,3,4,12]) = [(2012,2,28),(2011,3,31),(2011,4,28),(2013,12,1)]
 
-val test6 = get_nth (["hi", "there", "how", "are", "you"], 2) = "there"
-val test6_2 = get_nth (["hi"], 2) = ""
-val test6_3 = get_nth (["hi", "there", "how", "are", "you"], 5) = "you"
+val test6 = get_nth(["hi", "there", "how", "are", "you"], 2) = "there"
+val test6_2 = get_nth(["hi"], 2) = ""
+val test6_3 = get_nth(["hi", "there", "how", "are", "you"], 5) = "you"
 
-(*
+val test7 = date_to_string(2013, 6, 1) = "June 1, 2013"
+val test7_2 = date_to_string(2014, 6, 1) = "June 1, 2014"
+val test7_3 = date_to_string(2013, 9, 21) = "September 21, 2013"
 
-val test7 = date_to_string (2013, 6, 1) = "June 1, 2013"
-
-val test8 = number_before_reaching_sum (10, [1,2,3,4,5]) = 3
+val test8 = number_before_reaching_sum(10, [1,2,3,4,5]) = 3
+val test8_2 = number_before_reaching_sum(14, [1,2,3,4,5]) = 4
+val test8_3 = number_before_reaching_sum(19, [1,2,3,4,5]) = 5
 
 val test9 = what_month 70 = 3
+val test9_2 = what_month 12 = 1
+val test9_3 = what_month 150 = 5
 
-val test10 = month_range (31, 34) = [1,2,2,2]
+val test10 = month_range(31, 34) = [1,2,2,2]
+val test10_2 = month_range(1, 4) = [1,1,1,1]
+val test10_3 = month_range(150, 151) = [5,5]
 
-val test11 = oldest([(2012,2,28),(2011,3,31),(2011,4,28)]) = SOME (2011,3,31) *)
+val test11 = oldest([(2012,2,28),(2011,3,31),(2011,4,28)]) = SOME (2011,3,31)
+val test11_2 = oldest([(2012,2,28),(2011,3,31),(2011,4,28),(2009,4,28)]) = SOME (2009,4,28)
+val test11_3 = oldest([]) = NONE
