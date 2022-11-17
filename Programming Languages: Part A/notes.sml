@@ -83,3 +83,8 @@ val rec = { bar=(1+2, true andalso true), foo=3+4, baz=(false,9) };
 
 (* Tuples as Syntactic Sugar *)
 {2=5, 1=6} = (6, 5); (* true *)
+
+(* Datatype Bindings *)
+datatype mytype = TwoInts of int * int
+                | Str of string
+                | Pizza
