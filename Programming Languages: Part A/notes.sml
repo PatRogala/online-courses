@@ -88,3 +88,27 @@ val rec = { bar=(1+2, true andalso true), foo=3+4, baz=(false,9) };
 datatype mytype = TwoInts of int * int
                 | Str of string
                 | Pizza
+
+(* Case Expressions *)
+fun f(x : mytype) =
+    case x of
+        TwoInts(i, j) => i + j
+      | Str(s) => String.size s
+      | Pizza => 42;
+
+(* Type Synonyms *)
+
+datatype suit = Clubs | Diamonds | Hearts | Spades;
+datatype rank = Jack | Queen | King | Ace | Num of int;
+
+type card = suit * rank;
+
+(* Lists and Options are Datatypes *)
+datatype my_int_list = Empty | Cons of int * my_int_list;
+
+val x = Cons(4, Cons(5, Empty));
+
+fun append_my_list(xs, ys) =
+  case xs of
+    Empty => ys
+  | Cons(hd, tl) => Cons(hd, append_my_list(tl, ys));
