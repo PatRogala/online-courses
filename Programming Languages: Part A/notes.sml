@@ -112,3 +112,23 @@ fun append_my_list(xs, ys) =
   case xs of
     Empty => ys
   | Cons(hd, tl) => Cons(hd, append_my_list(tl, ys));
+
+(* More Nested Patterns *)
+fun nondecreasing xs =
+  case xs of
+    [] => true
+  | _::[] => true
+  | head::neck::rest => head <= neck andalso nondecreasing(neck::rest);
+
+datatype sgn = P | N | Z;
+
+fun multsign(x1, x2) =
+  let fun sign x = if x < 0 then N else if x = 0 then Z else P
+  in
+    case(sign x1, sign x2) of
+      (P, P) => P
+    | (N, N) => P
+    | (Z, _) => Z
+    | (_, Z) => Z
+    | _ => N
+  end;
