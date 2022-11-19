@@ -8,39 +8,45 @@ fun same_string(s1 : string, s2 : string) =
 
 (* put your solutions for problem 1 here *)
 
-fun all_except_option(x, []) = NONE
-  | all_except_option(x, y::ys) = if same_string(x, y)
-      then SOME ys
-      else case all_except_option (x, ys)
-        of NONE => NONE
-          | SOME zs => SOME (y::zs)
+fun all_except_option (s,xs) =
+  case xs of
+      [] => NONE
+    | x::xs' => if same_string(s,x)
+                then SOME xs'
+                else case all_except_option(s,xs') of
+                         NONE => NONE
+                       | SOME y => SOME(x::y)
 
-fun get_substitutions1([], s) = []
-  | get_substitutions1(x::xs, s)  = case all_except_option(s, x) of
-        NONE => get_substitutions1(xs, s)
-	    | SOME y  => y @ get_substitutions1(xs, s)
 
-fun get_substitutions2(sslist, s) =
-      let fun tail (xs, s, acc) =
-          case xs of
+fun get_substitutions1 (substitutions,str) =
+    case substitutions of
+	      [] => []
+      | x::xs => case all_except_option(str,x) of
+		                 NONE => get_substitutions1(xs,str)
+		               | SOME y => y @ get_substitutions1(xs,str)
+
+
+fun get_substitutions2 (substitutions,str) =
+    let fun loop (acc,substs_left) =
+        case substs_left of
             [] => acc
-          | (x::xs')  => case all_except_option(s, x) of
-                NONE => tail(xs', s, acc)
-              | SOME y  => tail(xs', s,  acc @ y )
-     in
-        tail(sslist, s, [] )
-     end
-
-fun similar_names( sslist, tmpl:{first:string, last:string, middle:string} )  =
-    let fun zipn( namelist, t ) =
-	case namelist of
-        [] => []
-	|(x'::xs') => case t of
-           {first=x, middle=y, last=z}=> {first=x', middle=y, last=z} :: zipn(xs', t)
+          | x::xs => loop ((case all_except_option(str,x) of
+                                NONE => acc
+                              | SOME y => acc @ y),
+                           xs)
     in
-      case tmpl of
-      {first=a, middle=b, last=c} =>
-          tmpl:: zipn( get_substitutions1(sslist, a), tmpl )
+        loop ([],substitutions)
+    end
+
+fun similar_names (substitutions,name) =
+    let
+        val {first=f, middle=m, last=l} = name
+	      fun make_names xs =
+	         case xs of
+		           [] => []
+	           | x::xs' => {first=x, middle=m, last=l}::(make_names(xs'))
+    in
+	      name::make_names(get_substitutions2(substitutions,f))
     end
 
 (* you may assume that Num is always used with values 2, 3, ..., 10
@@ -56,82 +62,65 @@ exception IllegalMove
 
 (* put your solutions for problem 2 here *)
 
-fun card_color ( x ) =
-   case x of
-   (Diamonds, _) => Red
-    | (Hearts, _)  => Red
-    | (Spades, _) => Black
-    | (Clubs, _)  => Black
+fun card_color card =
+    case card of
+        (Clubs,_)    => Black
+      | (Diamonds,_) => Red
+      | (Hearts,_)   => Red
+      | (Spades,_)   => Black
 
-fun card_value ( x ) =
-   case x of
-   (_, Num i) =>  i
-    | (_, Ace)  => 11
-    | (_, _)  => 10
+fun card_value card =
+    case card of
+	      (_,Jack) => 10
+      | (_,Queen) => 10
+      | (_,King) => 10
+      | (_,Ace) => 11
+      | (_,Num n) => n
 
-fun remove_card (clist, c, ex ) =
-    let fun all_except (c, [] ) = NONE
-	  | all_except (c, c':: cs) =
-            case c = c' of
-              true => SOME cs
-            | false => case all_except(c, cs) of
-                         NONE => NONE
-		       | SOME y  =>  SOME (c':: y)
+fun remove_card (cs,c,e) =
+    case cs of
+	      [] => raise e
+      | x::cs' => if x = c then cs' else x :: remove_card(cs',c,e)
+
+fun all_same_color cs =
+    case cs of
+        [] => true
+      | [_] => true
+      | head::neck::tail => card_color head = card_color neck
+			    andalso all_same_color(neck::tail)
+
+fun sum_cards cs =
+    let fun loop (acc,cs) =
+	    case cs of
+		      [] => acc
+	      | c::cs' => loop (acc + card_value c, cs')
     in
-      case all_except(c, clist) of
-        NONE => raise ex
-      | SOME y => y
-
-  end
-
-fun all_same_color ( [] ) = true
-  | all_same_color ( clist ) =
-  let fun test_color ( x::[] ) = SOME ( card_color x )
-	  | test_color ( x::xs ) = case test_color( xs ) of
-                                     NONE => NONE
-				   | SOME color => case color = card_color x of
-                                                     false => NONE
-						   | true  => SOME color
-  in
-    case test_color clist of
-      NONE => false
-    | SOME y => true
-  end
-
-fun sum_cards ( clist ) =
-  let fun sum_inner ( cs, acc ) =
-         case cs of
-           [] => acc
-	 | c::cs' => sum_inner( cs', acc + card_value(c) )
-  in
-     sum_inner(clist, 0)
-  end
-
-fun score ( clist, goal ) =
-  let val sum = sum_cards clist;
-      val pri_score = case sum > goal of
-                        true => 3 * (sum - goal)
-                      | false  => goal - sum
-  in
-    case all_same_color clist of
-      true => pri_score div 2
-    | false  => pri_score
-  end
+	    loop (0,cs)
+    end
 
 
- fun officiate (clist, mlist, goal) =
-    let fun inter_state(hlist, clist, mlist) =
-        case sum_cards(hlist) > goal of
-            true => hlist
-          | false => case mlist of
-                       [] => hlist
-		     | m::ms => case m of
-                           Draw =>( case clist of
-                                     [] => hlist
-			           | c::cs => inter_state(c::hlist, cs, ms) )
-			 | Discard c' =>
-                            inter_state( remove_card(hlist, c', IllegalMove), clist, ms)
+fun score (cs,goal) =
+    let
+        val sum = sum_cards cs
+    in
+        (if sum >= goal then 3 * (sum - goal) else goal - sum)
+	      div (if all_same_color cs then 2 else 1)
+    end
 
-   in
-     score( inter_state([], clist, mlist), goal)
-   end
+
+fun officiate (cards,plays,goal) =
+    let
+        fun loop (current_cards,cards_left,plays_left) =
+            case plays_left of
+                [] => score(current_cards,goal)
+              | (Discard c)::tail =>
+                loop (remove_card(current_cards,c,IllegalMove),cards_left,tail)
+              | Draw::tail =>
+                case cards_left of
+                    [] => score(current_cards,goal)
+                  | c::rest => if sum_cards (c::current_cards) > goal
+                               then score(c::current_cards,goal)
+                               else loop (c::current_cards,rest,tail)
+    in
+        loop ([],cards,plays)
+    end
