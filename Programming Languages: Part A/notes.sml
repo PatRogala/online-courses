@@ -132,3 +132,22 @@ fun multsign(x1, x2) =
     | (_, Z) => Z
     | _ => N
   end;
+
+(* Optional: Function Patterns *)
+fun eval (Constant i) = i
+  | eval (Add (e1, e2)) = (eval e1) + (eval e2)
+  | eval (Sub (e1, e2)) = (eval e1) - (eval e2)
+  | eval (Mul (e1, e2)) = (eval e1) * (eval e2)
+
+(* Exceptions *)
+exception MyException of string;
+exception MyException2 of string * int;
+
+fun max(x, y, ex) =
+    if x > y then x
+    else if x = y then raise ex "equal"
+    else y;
+
+val x = max(3, 3, MyException)
+    handle MyException s => 0;
+
