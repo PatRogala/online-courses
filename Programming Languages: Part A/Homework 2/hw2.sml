@@ -8,46 +8,34 @@ fun same_string(s1 : string, s2 : string) =
 
 (* put your solutions for problem 1 here *)
 
-(* you may assume that Num is always used with values 2, 3, ..., 10
-   though it will not really come up *)
-datatype suit = Clubs | Diamonds | Hearts | Spades
-datatype rank = Jack | Queen | King | Ace | Num of int
-type card = suit * rank
-
-datatype color = Red | Black
-datatype move = Discard of card | Draw
-
-exception IllegalMove
-
-(* put your solutions for problem 2 here *)
-fun all_except_option (x, []) = NONE
-  | all_except_option (x, y::ys) = if same_string(x, y)
+fun all_except_option(x, []) = NONE
+  | all_except_option(x, y::ys) = if same_string(x, y)
       then SOME ys
       else case all_except_option (x, ys)
         of NONE => NONE
           | SOME zs => SOME (y::zs)
 
-fun get_substitutions1 ([], s) = []
-  | get_substitutions1 (x::xs, s)  = case all_except_option(s, x) of
+fun get_substitutions1([], s) = []
+  | get_substitutions1(x::xs, s)  = case all_except_option(s, x) of
         NONE => get_substitutions1(xs, s)
-	|SOME y  => y @ get_substitutions1(xs, s)
+	    | SOME y  => y @ get_substitutions1(xs, s)
 
-fun get_substitutions2 (sslist, s) =
-      let fun inner (xs, s, acc) =
+fun get_substitutions2(sslist, s) =
+      let fun tail (xs, s, acc) =
           case xs of
-          [] => acc
-	  |(x::xs')  => case all_except_option(s, x) of
-              NONE => inner(xs', s, acc)
-	     | SOME y  => inner(xs', s,  acc @ y )
+            [] => acc
+          | (x::xs')  => case all_except_option(s, x) of
+                NONE => tail(xs', s, acc)
+              | SOME y  => tail(xs', s,  acc @ y )
      in
-        inner(sslist, s, [] )
+        tail(sslist, s, [] )
      end
 
-fun  similar_names ( sslist, tmpl:{first:string, last:string, middle:string} )  =
+fun similar_names( sslist, tmpl:{first:string, last:string, middle:string} )  =
     let fun zipn( namelist, t ) =
 	case namelist of
         [] => []
-	|( x'::xs') => case t of
+	|(x'::xs') => case t of
            {first=x, middle=y, last=z}=> {first=x', middle=y, last=z} :: zipn(xs', t)
     in
       case tmpl of
@@ -55,7 +43,6 @@ fun  similar_names ( sslist, tmpl:{first:string, last:string, middle:string} )  
           tmpl:: zipn( get_substitutions1(sslist, a), tmpl )
     end
 
-
 (* you may assume that Num is always used with values 2, 3, ..., 10
    though it will not really come up *)
 datatype suit = Clubs | Diamonds | Hearts | Spades
@@ -68,6 +55,7 @@ datatype move = Discard of card | Draw
 exception IllegalMove
 
 (* put your solutions for problem 2 here *)
+
 fun card_color ( x ) =
    case x of
    (Diamonds, _) => Red
