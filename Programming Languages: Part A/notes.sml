@@ -151,3 +151,11 @@ fun max(x, y, ex) =
 val x = max(3, 3, MyException)
     handle MyException s => 0;
 
+(* Anonymous Functions *)
+fun f_times(f,n,x) =
+  if n = 0 then x
+  else f_times(f, n-1, f x);
+
+fun triple_n_times(n,x) =
+  f_times((fn y => 3*y), n, x);
+
