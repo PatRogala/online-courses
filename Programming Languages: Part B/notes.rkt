@@ -34,3 +34,17 @@
 (null? xs) ;; Check if list is empty
 (car xs) ;; First element
 (cdr xs) ;; Rest of list
+
+;;Better style
+(cond
+  [(null? xs) 0]
+  [#t (+ (car xs) (sum (cdr xs)))])
+
+;; Let Binding
+(let ([x 1]
+      [y 2])
+  (+ x y))
+
+(letrec ([x 1]
+         [y (+ x 1)])
+  (+ x y))
