@@ -121,22 +121,16 @@
 ;;; that is created by the call to cached-assoc (use Racket library function vector or make-vector) and
 ;;; used-and-possibly-mutated each time the function returned by cached-assoc is called. Assume n is
 ;;; positive.
-(define (cached-assoc xs n)
-  (letrec
-    ([cache (make-vector n #f)]
-      [slot-idx 0]
-      [f (lambda (x)
-        (letrec
-          ([ans (vector-assoc x cache)])
-        (if ans
-          (begin
-            ans)
-          (letrec
-            ([newans (assoc x xs)])
-          (if newans
-            (begin
-              (vector-set! cache slot-idx newans)
-              (set! slot-idx (modulo (+ slot-idx 1) n))
-              newans)
-            newans)))))])
-    f))
+(define (cached-assoc lst n)
+  (let ([cache (make-vector n #f)]
+        [next-to-replace 0])
+    (lambda (v)
+      (or (vector-assoc v cache)
+          (let ([ans (assoc v lst)])
+            (and ans
+                 (begin (vector-set! cache next-to-replace ans)
+                        (set! next-to-replace
+                              (if (= (+ next-to-replace 1) n)
+                                  0
+                                  (+ next-to-replace 1)))
+                        ans)))))))
