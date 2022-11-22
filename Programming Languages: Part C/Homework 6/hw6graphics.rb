@@ -7,8 +7,8 @@ require 'tk'
 
 class TetrisRoot
   def initialize
-    @root = TkRoot.new('height' => 615, 'width' => 205, 
-             'background' => 'lightblue') {title "Tetris"}    
+    @root = TkRoot.new('height' => 615, 'width' => 205,
+                       'background' => 'lightblue') { title 'Tetris' }
   end
 
   def bind(char, callback)
@@ -72,11 +72,11 @@ class TetrisLabel
 end
 
 class TetrisButton
-  def initialize(label, color)
-    @button = TkButton.new do 
+  def initialize(label, color, &block)
+    @button = TkButton.new do
       text label
       background color
-      command (proc {yield})
+      command(proc(&block))
     end
   end
 
@@ -88,7 +88,7 @@ end
 class TetrisRect
   def initialize(wrapped_canvas, a, b, c, d, color)
     unwrapped_canvas = wrapped_canvas.canvas
-    @rect = TkcRectangle.new(unwrapped_canvas, a, b, c, d, 
+    @rect = TkcRectangle.new(unwrapped_canvas, a, b, c, d,
                              'outline' => 'black', 'fill' => color)
   end
 
@@ -99,7 +99,6 @@ class TetrisRect
   def move(dx, dy)
     @rect.move(dx, dy)
   end
-
 end
 
 def mainLoop
