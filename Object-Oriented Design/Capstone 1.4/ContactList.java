@@ -17,7 +17,7 @@ import java.util.ArrayList;
 
 public class ContactList {
     private ArrayList<Contact> contacts;
-    private String FILENAME;
+    private String FILENAME = "contacts.sav";
 
     public ContactList() {
         contacts = new ArrayList<Contact>();
