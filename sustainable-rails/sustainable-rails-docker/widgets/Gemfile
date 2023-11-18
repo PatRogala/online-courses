@@ -7,6 +7,12 @@ ruby "3.2.2"
 # development and testing
 gem "dotenv-rails", groups: [:development, :test]
 
+# Brakeman analyzes our code for security vulnerabilities
+gem "brakeman"
+
+# bundler-audit checks our dependencies for vulnerabilities
+gem "bundler-audit"
+
 # Ruby < 3.0 included rexml by default, but now
 # it's a separate gem that is required for running tests
 gem "rexml"
