@@ -1,24 +1,33 @@
-<section>
+<section class="center w-two-thirds helvetica pa3">
   <h1>New Widget</h1>
   <%= form_with model: @widget do |f| %>
-    <%= f.label :name %>
-    <%= f.text_field :name, autofocus: true,
-          placeholder: "e.g. Stembolt" %>
+    <div class="mb3">
+      <%= f.text_field :name, class: "db w-100 pa2 mb1", autofocus: true, placeholder: "e.g. Stembolt" %>
+      <%= f.label :name, class: "fw4 i" %>
+    </div>
+    <div class="mb3">
+      <%= f.text_field :price_cents, class: "db w-100 pa2 mb1", placeholder: "e.g. 123.45" %>
+      <%= f.label :price_cents, class: "fw4 i" %>
+    </div>
 
-    <%= f.label :price_cents %>
-    <%= f.text_field :price_cents, placeholder: "e.g. 123.45" %>
-
-    <%= f.label :manufacturer_id %>
-    <%=
-      f.select :manufacturer_id,
-        options_from_collection_for_select(
-          @manufacturers.sort_by(&:name),
-          "id", "name"
-        ),
-        {
-          include_blank: "-- Choose --",
-        }
-    %>
-  <%= f.submit "Create" %>
+    <div class="mb3">
+      <%=
+        f.select :manufacturer_id,
+          options_from_collection_for_select(
+            @manufacturers.sort_by(&:name),
+            "id", "name"
+          ),
+          {
+            include_blank: "-- Choose --",
+          },
+          {
+            class: "db w-100 pa2 mb1"
+          }
+        %>
+      <%= f.label :manufacturer_id, class: "fw4 i" %>
+    </div>
+    <div class="tr">
+      <%= f.submit "Create", class: "ba br3 ph3 pv2 white bg-dark-blue" % %>
+    </div>
   <% end %>
 </section>
