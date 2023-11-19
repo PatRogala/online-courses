@@ -1,5 +1,24 @@
 <h1><%= @widget.name %></h1>
 <h2>ID #<%= @widget.id %></h2>
-<%= link_to "/manufacturers/#{ @widget.manufacturer_id }" do %>
-  View Manufacturer
+<% if flash[:notice].present? %>
+  <aside>
+    <%= flash[:notice]
+  </aside>
 <% end %>
+<section>
+  <h3>Rate this widget</h3>
+
+  <ol>
+    <% (1..5).each do |rating| %>
+      <li>
+        <%= button_to rating,
+                      widget_ratings_path,
+                      params: {
+                                widget_id: @widget.id,
+                                rating: rating
+                              }
+        %>
+      </li>
+    <% end %>
+  </ol>
+</section>
