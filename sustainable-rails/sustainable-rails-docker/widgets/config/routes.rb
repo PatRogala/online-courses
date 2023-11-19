@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  resources :widgets
+  resources :widgets, only: [:show]
 
   # Defines the root path route ("/")
   # root "posts#index"
