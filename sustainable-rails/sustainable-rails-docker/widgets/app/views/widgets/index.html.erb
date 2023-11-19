@@ -1,0 +1,8 @@
+<h1>Our Widgets</h1>
+<ul>
+  <% @widgets.each do |widget| %>
+    <li>
+      <%= link_to widget.name, widget_path(widget.id) %>
+    </li>
+  <% end %>
+</ul>
