@@ -10,4 +10,4 @@
   out of <%= @widget.manufacturer.address.country %>
 </h3>
 
-<%= render partial: "rating", locals: { widget: @widget } %>
+<%= widget_rating_component(@widget) %>
