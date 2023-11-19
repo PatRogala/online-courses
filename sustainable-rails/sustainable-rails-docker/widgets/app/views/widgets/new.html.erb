@@ -1,13 +1,26 @@
 <section class="center w-two-thirds helvetica pa3">
   <h1>New Widget</h1>
+  <% if @widget.errors.present? %>
+    <aside class="pa3 tc ba br2 b--dark-red dark-red bg-washed-red b mb3">
+      The data you provided is not valid.
+    </aside>
+  <% end %>
   <%= form_with model: @widget do |f| %>
     <div class="mb3">
       <%= f.text_field :name, class: "db w-100 pa2 mb1", autofocus: true, placeholder: "e.g. Stembolt" %>
-      <%= f.label :name, class: "fw4 i" %>
+      <%= render partial: "widgets/label_with_error", locals: {
+        form: f,
+        record: @widget,
+        field_name: :name
+      }%>
     </div>
     <div class="mb3">
       <%= f.text_field :price_cents, class: "db w-100 pa2 mb1", placeholder: "e.g. 123.45" %>
-      <%= f.label :price_cents, class: "fw4 i" %>
+      <%= render partial: "widgets/label_with_error", locals: {
+        form: f,
+        record: @widget,
+        field_name: :price_cents
+      }%>
     </div>
 
     <div class="mb3">
@@ -24,7 +37,11 @@
             class: "db w-100 pa2 mb1"
           }
         %>
-      <%= f.label :manufacturer_id, class: "fw4 i" %>
+      <%= render partial: "widgets/label_with_error", locals: {
+        form: f,
+        record: @widget,
+        field_name: :manufacturer_id
+      }%>
     </div>
     <div class="tr">
       <%= f.submit "Create", class: "ba br3 ph3 pv2 white bg-dark-blue" % %>

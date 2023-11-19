@@ -1,0 +1,16 @@
+<%# Error sensing label %>
+
+<%# Shows a field label normally, but styles it with %>
+<%# error messages if the record's field has errors. %>
+
+<%# record:: The object that can have errors. Should mix %>
+<%#          in ActiveModel::Errors %>
+<%# field_name:: Name of the field as a symbol %>
+<%# form:: the yielded form object from form_with %>
+<% if record.errors[field_name].blank? %>
+  <%= form.label field_name, class: "fw4 i" %>
+<% else %>
+  <%= form.label field_name,
+    record.errors.full_messages_for(field_name).join(", "),
+    class: "i b dark-red" %>
+<% end %>
