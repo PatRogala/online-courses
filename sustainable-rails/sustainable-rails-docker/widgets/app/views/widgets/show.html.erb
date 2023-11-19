@@ -6,19 +6,24 @@
   </aside>
 <% end %>
 <section>
-  <h3>Rate this widget</h3>
+  <div class="clear-floats">
+    <h3 style="float: left; margin: 0; padding-right: 1rem;">
+      Rate this widget
+    </h3>
 
-  <ol>
-    <% (1..5).each do |rating| %>
-      <li>
-        <%= button_to rating,
-                      widget_ratings_path,
-                      params: {
-                                widget_id: @widget.id,
-                                rating: rating
-                              }
-        %>
-      </li>
-    <% end %>
-  </ol>
+    <ol style="list-style: none; padding: 0; margin: 0">
+      <% (1..5).each do |rating| %>
+        <li style="float: left">
+          <%= button_to rating,
+                        widget_ratings_path,
+                        params: {
+                                  widget_id: @widget.id,
+                                  rating: rating
+                                }
+          %>
+        </li>
+      <% end %>
+    </ol>
+  </div>
+  <p>Your ratings help us be amazing!</p>
 </section>
