@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  resources :widgets, only: [ :show, :index ]
+  resources :widgets, only: [ :show, :index, :new, :create ]
   resources :widget_ratings, only: [ :create ]
 
   # Defines the root path route ("/")
