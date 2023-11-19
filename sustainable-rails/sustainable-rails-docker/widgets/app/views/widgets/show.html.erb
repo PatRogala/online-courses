@@ -5,6 +5,10 @@
     <%= flash[:notice]
   </aside>
 <% end %>
+<h3>
+  Built by <%= @widget.manufacturer.name %>
+  out of <%= @widget.manufacturer.address.country %>
+</h3>
 <section>
   <div class="clear-floats">
     <h3 style="float: left; margin: 0; padding-right: 1rem;">
