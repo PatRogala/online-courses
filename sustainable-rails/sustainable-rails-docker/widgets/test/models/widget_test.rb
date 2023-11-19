@@ -2,21 +2,7 @@ require "test_helper"
 
 class WidgetTest < ActiveSupport::TestCase
   setup do
-    widget_status = WidgetStatus.create!(name: "fresh")
-    manufacturer = Manufacturer.create!(
-      name: "Cyberdyne Systems",
-      address: Address.create!(
-        street: "742 Evergreen Terrace",
-        zip: "90210"
-      )
-    )
-
-    @widget = Widget.create!(
-      name: "Stembolt",
-      manufacturer: manufacturer,
-      widget_status: widget_status,
-      price_cents: 10_00
-    )
+    @widget = FactoryBot.create(:widget)
   end
 
   test "valid prices do not trigger the DB constraint" do
