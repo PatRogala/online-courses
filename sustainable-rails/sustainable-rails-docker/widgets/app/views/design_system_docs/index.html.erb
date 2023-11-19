@@ -1,0 +1,59 @@
+<section class="pa3">
+  <h1>
+    Design System Docs
+    <nav class="f4 di ml3">
+      <a href="#font-sizes">Font Sizes</a> |
+      <a href="#sizes">Sizes</a> |
+      <a href="#colors">Colors</a> |
+      <a href="https://tachyons.io/docs/">Tachyons Docs</a>
+    </nav>
+  </h1>
+  <a name="font-sizes">
+    <h2>Font Sizes</h2>
+    <% @design_system_docs.font_sizes.each do |font_size_css_class| %>
+    <p class="<%= font_size_css_class %> mt0 mb0">
+      <%= font_size_css_class %> Font Size </p>
+    <code>
+      <pre>
+&lt;p class="<%= font_size_css_class %>"&gt;
+<%= font_size_css_class %> Font Size &lt;/p&gt;
+</pre></code>
+    <% end %>
+    <a name="sizes">
+      <h2>Sizes</h2>
+      <% @design_system_docs.sizes.each do |size_number| %>
+      <h3>Size <%= size_number %></h3>
+      <div class="pa<%= size_number %> ba
+&nbsp;
+</div>
+h<%= size_number %>
+w<%= size_number %> bg-gray">
+        <code>
+          <pre>
+&lt;div class="pa<%= size_number %>"&gt;
+  Padding all sides
+&lt;/div&gt;
+&lt;div class="ma<%= size_number %>"&gt; Margin all sides
+&lt;/div&gt; </pre></code>
+        <% end %>
+        <a name="colors">
+          <h2>Colors</h2>
+          <% @design_system_docs.colors.each do |name, css_class| %>
+          <h3><%= name.to_s.humanize %></h3>
+          <div class="ma1 pv3 ph2 h4 bg-<%= css_class %> white">
+            <code>
+              <pre>
+&lt;div class="bg-<%= css_class %>"&gt;
+<%= name %> background &lt;/div&gt;
+      </pre></code>
+          </div>
+          <div class="ma1 pv3 ph2 h4 ba b--<%= css_class %>
+<%= css_class %> bg-white">
+            <code>
+              <pre>
+&lt;div class="<%= css_class %> b--<%= css_class %>"&gt;
+<%= name %> border and text &lt;/div&gt;
+      </pre></code>
+          </div>
+          <% end %>
+</section>

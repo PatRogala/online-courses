@@ -17,6 +17,12 @@ gem "bundler-audit"
 # traditional one-line-per-event format
 gem "lograge"
 
+# SASS compiles our CSS, and sassc-rails is maintained
+gem "sassc-rails"
+
+# We use tachyons to style our views
+gem "tachyonscss-rails"
+
 # Ruby < 3.0 included rexml by default, but now
 # it's a separate gem that is required for running tests
 gem "rexml"
