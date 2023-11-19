@@ -15,7 +15,7 @@ class ViewWidgetTest < ApplicationSystemTestCase
     # remember, 1234 is formatted as 12.34
     formatted_widget_id_regexp = /12\.34/x§
 
-    assert_selector "h1", text: widget_name_regexp
+    assert_selector "[data-testid='widget-name']", text: widget_name_regexp
     assert_selector "h2", text: formatted_widget_id_regexp
   end
 end
