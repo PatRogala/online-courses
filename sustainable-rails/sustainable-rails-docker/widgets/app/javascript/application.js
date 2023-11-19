@@ -7,3 +7,6 @@ import { Turbo } from "@hotwired/turbo-rails"
 Turbo.setProgressBarDelay(100)
 
 import "controllers"
+
+import { WidgetRatings } from "widget_ratings"
+WidgetRatings.start(window)

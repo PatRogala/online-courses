@@ -5,7 +5,12 @@
 <%#                optional, default is false (show CTA)  %>
 
 <section>
-  <div class="clear-floats">
+  <div class="dn" data-rating-present>
+    <p>Thanks for rating this a
+      <span data-rating-label></span>
+    </p>
+  </div>
+  <div class="cf" data-no-rating-present>
     <h3 style="float: left; margin: 0; padding-right: 1rem;">
       Rate this widget
     </h3>
@@ -15,6 +20,10 @@
         <li style="float: left">
           <%= button_to rating,
                         widget_ratings_path,
+                        remote: true,
+                        data: {
+                          rating: true
+                        },
                         params: {
                                   widget_id: widget.id,
                                   rating: rating
