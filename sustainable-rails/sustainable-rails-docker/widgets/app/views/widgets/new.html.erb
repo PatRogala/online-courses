@@ -2,15 +2,18 @@
   <h1>New Widget</h1>
   <%= form_with model: @widget do |f| %>
     <%= f.label :name %>
-    <%= f.text_field :name %>
+    <%= f.text_field :name, autofocus: true,
+          placeholder: "e.g. Stembolt" %>
 
     <%= f.label :price_cents %>
-    <%= f.text_field :price_cents %>
+    <%= f.text_field :price_cents, placeholder: "e.g. 123.45" %>
+
     <%= f.label :manufacturer_id %>
     <%=
       f.select :manufacturer_id,
         options_from_collection_for_select(
-          @manufacturers, "id", "name"
+          @manufacturers.sort_by(&:name),
+          "id", "name"
         ),
         {
           include_blank: "-- Choose --",
